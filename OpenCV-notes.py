@@ -11,6 +11,17 @@ img = cv2.imread("./samples/20.PNG", 0)
 
 cv2.imshow("haiyo", img)
 
+# show image using matplotlib
+
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+
+img = cv2.imread('samples/03.PNG', 0)
+plt.imshow(img, cmap='gray', interpolation='bicubic')
+plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+plt.show()
+
 # wait for a keypress event -> if 0 is passed, waits indefinitely
 
 cv2.waitKey(0)
