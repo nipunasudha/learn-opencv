@@ -185,26 +185,28 @@ print(img.shape)
 print(img.size)
 print(img.dtype)
 
-
 # ============================================================================
-#REGION OF IMAGE
-ball = img[280:340, 330:390] #select and name a region of an image
-img[273:333, 100:160] = ball #paste that defined part on another region
+# REGION OF IMAGE
+ball = img[280:340, 330:390]  # select and name a region of an image
+img[273:333, 100:160] = ball  # paste that defined part on another region
 
 # ============================================================================
 # Splitting & merging chanels
-b,g,r = cv2.split(img)
-img = cv2.merge((b,g,r))
-#-----------
-b = img[:,:,0] #select blue chanel
-img[:,:,2] = 0 #set red to 0
-# ============================================================================
-#
-
+b, g, r = cv2.split(img)
+img = cv2.merge((b, g, r))
+# -----------
+b = img[:, :, 0]  # select blue chanel
+img[:, :, 2] = 0  # set red to 0
 
 # ============================================================================
-#
+# Image adding & blending
+resultImg = cv2.add(A, B)
+resultImg = cv2.addWeighted(A, 0.7, B, 0.3, 0)  # last parameter is like total offset (brightness)
 
+# ============================================================================
+#Threshold
+#https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_image_arithmetics/py_image_arithmetics.html
+#http://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html
 
 # ============================================================================
 #
