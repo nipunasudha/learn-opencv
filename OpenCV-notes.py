@@ -348,8 +348,11 @@ result = cv2.warpAffine(img, M, (cols, rows))
 dst = translate(res, 100, 50)
 
 # ============================================================================
-#
-
+# Image rotation
+M = cv2.getRotationMatrix2D(origin, angle, scale)
+result = cv2.warpAffine(res, M, (size[0], size[1]))
+# OR use shortcut
+dst = rotate(res, 45, scale=0.5)
 
 # ============================================================================
 #

@@ -59,5 +59,20 @@ def translate(img, offset, size=(-1, -1)):
     if (size == (-1, -1)):
         size = (Icols, Irows)
     M = np.float32([[1, 0, offset[0]], [0, 1, offset[1]]])
-    result = cv2.warpAffine(res, M, (size[0],size[1]))
+    result = cv2.warpAffine(res, M, (size[0], size[1]))
+    return result
+
+
+# Image rotation shortcut
+def rotate(img, angle, origin=('x', 'x'), size=(-1, -1), scale=1.0):
+    Irows, Icols, ch = img.shape
+
+    if (size == (-1, -1)):
+        size = (Icols, Irows)
+
+    if (origin == ('x', 'x')):
+        origin = ((size[0] / 2, size[1] / 2))
+
+    M = cv2.getRotationMatrix2D(origin, angle, scale)
+    result = cv2.warpAffine(res, M, (size[0], size[1]))
     return result
