@@ -383,8 +383,14 @@ median = cv2.medianBlur(img, 5) #(image, amount)
 blur = cv2.bilateralFilter(img, 9, 75, 75)
 
 # ============================================================================
-#
-
+#Morphological Transformations
+kernel = np.ones((5,5),np.uint8) #building a kernel, a unit of operation
+#--------------------------------
+erosion = cv2.erode(img,kernel,iterations = 1)
+dilation = cv2.dilate(img,kernel,iterations = 1)
+opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+gradient = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel) #difference btwn erosion-dilation
 
 # ============================================================================
 #

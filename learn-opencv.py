@@ -1,25 +1,32 @@
 import cv2
 import numpy as np
 
+cap = cv2.VideoCapture(1)
 
-def rotate(img, angle, origin=('x', 'x'), size=(-1, -1), scale=1.0):
-    Irows, Icols, ch = img.shape
+while (1):
+    # Take each frame
+    _, frame = cap.read()
 
-    if (size == (-1, -1)):
-        size = (Icols, Irows)
+    # Convert BGR to HSV
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    if (origin == ('x', 'x')):
-        origin = ((size[0] / 2, size[1] / 2))
+    # define range of blue color in HSV
+    lower_blue = np.array([90, 130, 30])
+    upper_blue = np.array([130, 255, 255])
 
-    M = cv2.getRotationMatrix2D(origin, angle, scale)
-    result = cv2.warpAffine(res, M, (size[0], size[1]))
-    return result
+    # Threshold the HSV image to get only blue colors
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    kernel = np.ones((5, 5), np.uint8)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
 
+    # Bitwise-AND mask and original image
+    res = cv2.bitwise_and(frame, frame, mask=mask)
+    cv2.imshow('frame', frame)
+    cv2.imshow('mask', mask)
+    cv2.imshow('res', res)
+    k = cv2.waitKey(5) & 0xFF
+    if k == 27:
+        break
 
-img = cv2.imread('samples/16.PNG')
-
-res = cv2.resize(img, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
-
-dst = rotate(res,45,scale=0.5)
-cv2.imshow("Resized", dst)
-cv2.waitKey(0)
+cv2.destroyAllWindows()
