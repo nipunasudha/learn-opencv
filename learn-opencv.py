@@ -1,32 +1,20 @@
 import cv2
 import numpy as np
+from matplotlib import pyplot as plt
 
-cap = cv2.VideoCapture(1)
+img = cv2.imread('samples/16.PNG',0)
 
-while (1):
-    # Take each frame
-    _, frame = cap.read()
+laplacian = cv2.Laplacian(img,cv2.CV_64F)
+sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
+sobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)
 
-    # Convert BGR to HSV
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+plt.subplot(2,2,1),plt.imshow(img,cmap = 'gray')
+plt.title('Original'), plt.xticks([]), plt.yticks([])
+plt.subplot(2,2,2),plt.imshow(laplacian,cmap = 'gray')
+plt.title('Laplacian'), plt.xticks([]), plt.yticks([])
+plt.subplot(2,2,3),plt.imshow(sobelx,cmap = 'gray')
+plt.title('Sobel X'), plt.xticks([]), plt.yticks([])
+plt.subplot(2,2,4),plt.imshow(sobely,cmap = 'gray')
+plt.title('Sobel Y'), plt.xticks([]), plt.yticks([])
 
-    # define range of blue color in HSV
-    lower_blue = np.array([90, 130, 30])
-    upper_blue = np.array([130, 255, 255])
-
-    # Threshold the HSV image to get only blue colors
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
-    kernel = np.ones((5, 5), np.uint8)
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-
-    # Bitwise-AND mask and original image
-    res = cv2.bitwise_and(frame, frame, mask=mask)
-    cv2.imshow('frame', frame)
-    cv2.imshow('mask', mask)
-    cv2.imshow('res', res)
-    k = cv2.waitKey(5) & 0xFF
-    if k == 27:
-        break
-
-cv2.destroyAllWindows()
+plt.show()
