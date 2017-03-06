@@ -355,16 +355,32 @@ result = cv2.warpAffine(res, M, (size[0], size[1]))
 dst = rotate(res, 45, scale=0.5)
 
 # ============================================================================
-#
+# Affine Transformation
+pts1 = np.float32([[50, 50], [200, 50], [50, 200]])
+pts2 = np.float32([[10, 100], [200, 50], [100, 250]])
 
+M = cv2.getAffineTransform(pts1, pts2)
+
+dst = cv2.warpAffine(img, M, (cols, rows))
 
 # ============================================================================
-#
+# Perspective Transformation
+pts1 = np.float32([[56, 65], [368, 52], [28, 387], [389, 390]])
+pts2 = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
 
+M = cv2.getPerspectiveTransform(pts1, pts2)
+
+dst = cv2.warpPerspective(img, M, (300, 300))
 
 # ============================================================================
-#
+# FILTERING
+blur = cv2.blur(img, (5, 5))  # (image,boxsize)
 
+blur = cv2.GaussianBlur(img, (5, 5), 0)  # (image,blurRadius, blurAmount)
+
+median = cv2.medianBlur(img, 5) #(image, amount)
+
+blur = cv2.bilateralFilter(img, 9, 75, 75)
 
 # ============================================================================
 #
