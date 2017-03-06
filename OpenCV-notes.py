@@ -334,14 +334,18 @@ for i in range(3):
     plt.title(titles[i * 3 + 2]), plt.xticks([]), plt.yticks([])
 plt.show()
 
+# ============================================================================
+# Image resizing / scaling
+res = cv2.resize(img, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
+# OR
+res = cv2.resize(img, (newWidth, newHeight), interpolation=cv2.INTER_CUBIC)
 
 # ============================================================================
-#
-
-
-# ============================================================================
-#
-
+# Image translation
+M = np.float32([[1, 0, 100], [0, 1, 50]])  # build transformation matrix
+result = cv2.warpAffine(img, M, (cols, rows))
+# OR use shortcut
+dst = translate(res, 100, 50)
 
 # ============================================================================
 #

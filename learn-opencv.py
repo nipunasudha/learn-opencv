@@ -1,22 +1,21 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 
-img = cv2.imread('processing/bookpage.png',0)
-img = cv2.medianBlur(img,5)
 
-ret,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
-th2 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
-            cv2.THRESH_BINARY,11,2)
-th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
-            cv2.THRESH_BINARY,11,2)
+def translate(img, x, y, cols=-1, rows=-1):
+    Irows, Icols, ch = img.shape
+    if ((cols, rows) == (-1, -1)):
+        (cols, rows) = (Icols, Irows)
+    M = np.float32([[1, 0, x], [0, 1, y]])
+    result = cv2.warpAffine(res, M, (cols, rows))
+    return result
 
-titles = ['Original Image', 'Global Thresholding (v = 127)',
-            'Adaptive Mean Thresholding', 'Adaptive Gaussian Thresholding']
-images = [img, th1, th2, th3]
 
-for i in range(4):
-    plt.subplot(2,2,i+1),plt.imshow(images[i],'gray')
-    plt.title(titles[i])
-    plt.xticks([]),plt.yticks([])
-plt.show()
+img = cv2.imread('samples/03.PNG')
+
+res = cv2.resize(img, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
+
+dst = translate(res, -100, -100,100,100)
+
+cv2.imshow("Resized", dst)
+cv2.waitKey(0)
