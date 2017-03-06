@@ -53,11 +53,11 @@ def BGR2HSV(rgb):
     return cv2.cvtColor(rgb, cv2.COLOR_BGR2HSV)
 
 
-# image translation shortcut
-def translate(img, x, y, cols=-1, rows=-1):
+# image translation shortcut (improved)
+def translate(img, offset, size=(-1, -1)):
     Irows, Icols, ch = img.shape
-    if ((cols, rows) == (-1, -1)):
-        (cols, rows) = (Icols, Irows)
-    M = np.float32([[1, 0, x], [0, 1, y]])
-    result = cv2.warpAffine(res, M, (cols, rows))
+    if (size == (-1, -1)):
+        size = (Icols, Irows)
+    M = np.float32([[1, 0, offset[0]], [0, 1, offset[1]]])
+    result = cv2.warpAffine(res, M, (size[0],size[1]))
     return result
