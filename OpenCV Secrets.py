@@ -41,3 +41,13 @@ def CV2PIL(input_img):
 def showImageCV(input_img, title=""):
     cv2.imshow(title, input_img)
     cv2.waitKey(0)
+
+
+# convert BGR to HSV
+def BGR2HSV(r, g, b):
+    return cv2.cvtColor(np.uint8([[[0, 255, 0]]]), cv2.COLOR_BGR2HSV)
+
+
+# convert HSV to RGB
+def BGR2HSV(rgb):
+    return cv2.cvtColor(rgb, cv2.COLOR_BGR2HSV)

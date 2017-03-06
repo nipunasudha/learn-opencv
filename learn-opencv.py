@@ -1,18 +1,34 @@
+
+# img = cv2.imread("processing/bluedot.jpg")
+
 import cv2
 import numpy as np
 
-img = cv2.imread("processing/bluedot.jpg")
+cap = cv2.VideoCapture(0)
 
-a = img[:, :, 1]
-b = img[:, :, 0]
-c = np.flip(b, 1)
+while(1):
 
-d = cv2.add(a, c)
+    # Take each frame
+    _, frame = cap.read()
 
-cv2.imshow("Just Add", d)
-cv2.waitKey(0)
+    # Convert BGR to HSV
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-e = cv2.addWeighted(a, 0.7, c, 0.3, 0)
-#last parameter is like total offset (brightness)
-cv2.imshow("Weighted Add", cv2.bitwise_not(e))
-cv2.waitKey(0)
+    # define range of blue color in HSV
+    lower_blue = np.array([90,50,50])
+    upper_blue = np.array([150,255,255])
+
+    # Threshold the HSV image to get only blue colors
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    # Bitwise-AND mask and original image
+    res = cv2.bitwise_and(frame,frame, mask= mask)
+
+    cv2.imshow('frame',frame)
+    cv2.imshow('mask',mask)
+    cv2.imshow('res',res)
+    k = cv2.waitKey(5) & 0xFF
+    if k == 27:
+        break
+
+cv2.destroyAllWindows()
