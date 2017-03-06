@@ -204,10 +204,9 @@ resultImg = cv2.add(A, B)
 resultImg = cv2.addWeighted(A, 0.7, B, 0.3, 0)  # last parameter is like total offset (brightness)
 
 # ============================================================================
-#Threshold
-#https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_image_arithmetics/py_image_arithmetics.html
-#http://docs.opencv.org/3.2.0/d7/d4d/tutorial_py_thresholding.html
-
+# Bitwise operations
+img = cv2.bitwise_not(img)  # invert image
+img = cv2.bitwise_and(A, B, mask=mask_inv)
 # ============================================================================
 #
 
