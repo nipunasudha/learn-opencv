@@ -409,7 +409,10 @@ edges = cv2.Canny(frame, 100, 300)  # frame, min, max
 # CONTOUR
 # Finding & drawing contours
 image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-image = cv2.drawContours(im, contours, -1, (0, 255, 255), 2)
+
+image = cv2.drawContours(im, allContours, -1, (0, 255, 255), 2)
+#OR
+image = cv2.drawContours(im, [singleContour], 0, (0, 255, 255), 2)
 
 # Straight Bounding Rectangle
 x, y, w, h = cv2.boundingRect(contours[1])
@@ -425,6 +428,9 @@ im = cv2.drawContours(im, [box], 0, (0, 0, 255), 2)
 ellipse = cv2.fitEllipse(contours[18])
 im = cv2.ellipse(im, ellipse, (0, 0, 255), 2)
 
+# Approximation
+epsilon = 0.05 * cv2.arcLength(singleContour, True)
+singleContour = cv2.approxPolyDP(singleContour, epsilon, True)
 
 # ============================================================================
 #
