@@ -51,3 +51,13 @@ def BGR2HSV(r, g, b):
 # convert HSV to RGB
 def BGR2HSV(rgb):
     return cv2.cvtColor(rgb, cv2.COLOR_BGR2HSV)
+
+
+# image translation shortcut
+def translate(img, x, y, cols=-1, rows=-1):
+    Irows, Icols, ch = img.shape
+    if ((cols, rows) == (-1, -1)):
+        (cols, rows) = (Icols, Irows)
+    M = np.float32([[1, 0, x], [0, 1, y]])
+    result = cv2.warpAffine(res, M, (cols, rows))
+    return result
