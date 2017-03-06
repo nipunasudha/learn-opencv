@@ -378,37 +378,52 @@ blur = cv2.blur(img, (5, 5))  # (image,boxsize)
 
 blur = cv2.GaussianBlur(img, (5, 5), 0)  # (image,blurRadius, blurAmount)
 
-median = cv2.medianBlur(img, 5) #(image, amount)
+median = cv2.medianBlur(img, 5)  # (image, amount)
 
 blur = cv2.bilateralFilter(img, 9, 75, 75)
 
 # ============================================================================
-#Morphological Transformations
-kernel = np.ones((5,5),np.uint8) #building a kernel, a unit of operation
-#--------------------------------
-erosion = cv2.erode(img,kernel,iterations = 1)
-dilation = cv2.dilate(img,kernel,iterations = 1)
+# Morphological Transformations
+kernel = np.ones((5, 5), np.uint8)  # building a kernel, a unit of operation
+# --------------------------------
+erosion = cv2.erode(img, kernel, iterations=1)
+dilation = cv2.dilate(img, kernel, iterations=1)
 opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
 closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
-gradient = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel) #difference btwn erosion-dilation
+gradient = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel)  # difference btwn erosion-dilation
 
 # ============================================================================
-#Image gradients
-img = cv2.imread('samples/16.PNG',0)
+# Image gradients
+img = cv2.imread('samples/16.PNG', 0)
 
-laplacian = cv2.Laplacian(img,cv2.CV_64F)
-sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
-sobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)
-
-
-# ============================================================================
-#Edge detection
-#canny
-edges = cv2.Canny(frame, 100, 300) #frame, min, max
-
+laplacian = cv2.Laplacian(img, cv2.CV_64F)
+sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=5)
+sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=5)
 
 # ============================================================================
-#
+# Edge detection
+# canny
+edges = cv2.Canny(frame, 100, 300)  # frame, min, max
+
+# ============================================================================
+# CONTOUR
+# Finding & drawing contours
+image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+image = cv2.drawContours(im, contours, -1, (0, 255, 255), 2)
+
+# Straight Bounding Rectangle
+x, y, w, h = cv2.boundingRect(contours[1])
+image = cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+# Rotated Rectangle
+rect = cv2.minAreaRect(contours[6])
+box = cv2.boxPoints(rect)
+box = np.int0(box)
+im = cv2.drawContours(im, [box], 0, (0, 0, 255), 2)
+
+# Fitting an Ellipse
+ellipse = cv2.fitEllipse(contours[18])
+im = cv2.ellipse(im, ellipse, (0, 0, 255), 2)
 
 
 # ============================================================================
