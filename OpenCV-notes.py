@@ -449,7 +449,7 @@ Match Shapes!!!
 
 # ============================================================================
 #Contour Hierarchy
-
+Learn about it later, it's the hierarchy of detected contour objects, like layers
 
 # ============================================================================
 #
