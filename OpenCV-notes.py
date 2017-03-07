@@ -432,8 +432,23 @@ im = cv2.ellipse(im, ellipse, (0, 0, 255), 2)
 epsilon = 0.05 * cv2.arcLength(singleContour, True)
 singleContour = cv2.approxPolyDP(singleContour, epsilon, True)
 
+#Properties/functions
+Aspect Ratio
+Extent
+Solidity
+Equivalent Diameter
+Orientation
+Mask and Pixel Points
+Mean Color or Mean Intensity
+Extreme Points
+Convexity Defects
+Point Polygon Test!!!
+Match Shapes!!!
+
+
+
 # ============================================================================
-#
+#Contour Hierarchy
 
 
 # ============================================================================
