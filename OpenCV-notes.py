@@ -44,6 +44,11 @@ elif k == ord('s'):  # wait for 's' key to save and exit
 cv2.destroyAllWindows()
 
 # ============================================================================
+# move open windows
+
+cv2.moveWindow("processed", 550, 50)
+
+# ============================================================================
 # destroy a specific window
 
 cv2.destroyWindow("windowName")
@@ -189,6 +194,10 @@ print(img.dtype)
 # REGION OF IMAGE
 ball = img[280:340, 330:390]  # select and name a region of an image
 img[273:333, 100:160] = ball  # paste that defined part on another region
+
+# ============================================================================
+# CREATE A COPY OF IMAGE
+img_cropped = img_ori[146:201, 48: 304].copy()
 
 # ============================================================================
 # Splitting & merging chanels
@@ -411,7 +420,7 @@ edges = cv2.Canny(frame, 100, 300)  # frame, min, max
 image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
 image = cv2.drawContours(im, allContours, -1, (0, 255, 255), 2)
-#OR
+# OR
 image = cv2.drawContours(im, [singleContour], 0, (0, 255, 255), 2)
 
 # Straight Bounding Rectangle
@@ -432,24 +441,43 @@ im = cv2.ellipse(im, ellipse, (0, 0, 255), 2)
 epsilon = 0.05 * cv2.arcLength(singleContour, True)
 singleContour = cv2.approxPolyDP(singleContour, epsilon, True)
 
-#Properties/functions
-Aspect Ratio
+# Properties/functions
+Aspect
+Ratio
 Extent
 Solidity
-Equivalent Diameter
+Equivalent
+Diameter
 Orientation
-Mask and Pixel Points
-Mean Color or Mean Intensity
-Extreme Points
-Convexity Defects
-Point Polygon Test!!!
-Match Shapes!!!
+Mask and Pixel
+Points
+Mean
+Color or Mean
+Intensity
+Extreme
+Points
+Convexity
+Defects
+Point
+Polygon
+Test!!!
+Match
+Shapes!!!
 
 
 
 # ============================================================================
-#Contour Hierarchy
-Learn about it later, it's the hierarchy of detected contour objects, like layers
+# Contour Hierarchy
+Learn
+about
+it
+later, it is the
+hierarchy
+of
+detected
+contour
+objects, like
+layers
 
 # ============================================================================
 #
