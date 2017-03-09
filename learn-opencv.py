@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import sys
 import pyocr.builders
+import pyocr.tesseract
 import PIL
 from PIL import Image
 
@@ -30,7 +31,7 @@ tool = initTool()
 lang = tool.get_available_languages()[2]
 
 # img_ori = cv2.imread('processing/digits copy.jpg')
-img_ori = cv2.imread('processing/digits.jpg')
+img_ori = cv2.imread('processing/digits-dot.jpg')
 img_cropped = img_ori[146:201, 48: 304].copy()
 img_marked = cv2.rectangle(img_ori, (48, 146), (304, 201), (0, 255, 0), 1)
 
@@ -49,7 +50,7 @@ img_cropped = cv2.morphologyEx(img_cropped, cv2.MORPH_OPEN, kernel)
 txt = tool.image_to_string(
     CV2PIL(img_cropped),
     lang=lang,
-    builder=pyocr.builders.TextBuilder()
+    builder=pyocr.tesseract.DigitBuilder()
 )
 print(txt)
 
@@ -59,4 +60,3 @@ cv2.imshow("processed", img_cropped)
 cv2.moveWindow("original", 50, 50)
 cv2.moveWindow("processed", 550, 50)
 cv2.waitKey(0)
-
