@@ -88,7 +88,7 @@ def getSelectionsFromImage(img):
     cv2.destroyAllWindows()
     return refPts
 
-
-img = cv2.imread('samples/34.PNG')
-co = getSelectionsFromImage(img)
-print(co)
+#
+# img = cv2.imread('samples/34.PNG')
+# co = getSelectionsFromImage(img)
+# print(co)
