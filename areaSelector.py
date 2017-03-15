@@ -58,9 +58,10 @@ def getSelectionsFromImage(img):
     image = img
     refPts = []  # Reinit refPts
     clone = image.copy()
+    render_instructions(clone)
     cv2.namedWindow("© 2017 Syntac Inc. Palwatte Distillery Monitor")
     cv2.setMouseCallback("© 2017 Syntac Inc. Palwatte Distillery Monitor", click_handler)
-    cv2.imshow("© 2017 Syntac Inc. Palwatte Distillery Monitor", image)
+    cv2.imshow("© 2017 Syntac Inc. Palwatte Distillery Monitor", clone)
     while True:
         # cv2.imshow("© 2017 Syntac Inc. Palwatte Distillery Monitor", image)
         key = cv2.waitKey(1) & 0xFF
@@ -88,6 +89,6 @@ def getSelectionsFromImage(img):
     return refPts
 
 
-img = cv2.imread('samples/17.PNG')
+img = cv2.imread('samples/34.PNG')
 co = getSelectionsFromImage(img)
 print(co)
