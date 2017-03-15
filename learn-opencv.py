@@ -47,6 +47,7 @@ kernel = np.ones((3, 3), np.uint8)  # building a kernel, a unit of operation
 img_cropped = cv2.morphologyEx(img_cropped, cv2.MORPH_CLOSE, kernel)
 img_cropped = cv2.morphologyEx(img_cropped, cv2.MORPH_OPEN, kernel)
 # ------------------------
+# ------------------------
 txt = tool.image_to_string(
     CV2PIL(img_cropped),
     lang=lang,

@@ -1,3 +1,5 @@
 numpy
 pyocr
 pillow
+tesseract
+pytesseract
