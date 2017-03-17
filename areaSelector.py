@@ -4,6 +4,7 @@ import operator
 
 # Shared variable declarations
 refPts = []
+sizeThreshold = 8
 image = 1
 numSelected = 0
 clone = 1
@@ -19,9 +20,14 @@ def make_positive(tup):
 
 
 def correct_coordinates():
+    global sizeThreshold
     for index in range(int(len(refPts) / 2)):
         x1, y1 = make_positive(refPts[(index * 2)])
         x2, y2 = make_positive(refPts[(index * 2) + 1])
+        if (abs(x1 - x2) < sizeThreshold or abs(y1 - y2) < sizeThreshold):
+            del refPts[(index * 2)]
+            del refPts[(index * 2)]
+            return 0
         if x1 > x2:
             if y1 > y2:
                 refPts[(index * 2)] = (x2, y2)
