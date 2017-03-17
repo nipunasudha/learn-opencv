@@ -78,7 +78,7 @@ def getSelectionsFromImage(img):
         print(len(refPts) / 2)
         print(refPts)
         for selection in range(0, int(len(refPts) / 2)):
-            roi = clone[refPts[0 + (selection * 2)][1]:refPts[1 + (selection * 2)][1],
+            roi = image[refPts[0 + (selection * 2)][1]:refPts[1 + (selection * 2)][1],
                   refPts[0 + (2 * selection)][0]:refPts[1 + (2 * selection)][0]]
             cv2.imshow("ROI" + str(selection), roi)
     else:
@@ -88,7 +88,7 @@ def getSelectionsFromImage(img):
     cv2.destroyAllWindows()
     return refPts
 
-#
-# img = cv2.imread('samples/34.PNG')
-# co = getSelectionsFromImage(img)
-# print(co)
+
+img = cv2.imread('samples/34.PNG')
+co = getSelectionsFromImage(img)
+print(co)
