@@ -11,6 +11,33 @@ onDrag = 0
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 
+def make_positive(tup):
+    x, y = tup
+    if x < 0: x = 0
+    if y < 0: y = 0
+    return (x, y)
+
+
+def correct_coordinates():
+    for index in range(int(len(refPts) / 2)):
+        x1, y1 = make_positive(refPts[(index * 2)])
+        x2, y2 = make_positive(refPts[(index * 2) + 1])
+        if x1 > x2:
+            if y1 > y2:
+                refPts[(index * 2)] = (x2, y2)
+                refPts[(index * 2) + 1] = (x1, y1)
+            else:
+                refPts[(index * 2)] = (x2, y1)
+                refPts[(index * 2) + 1] = (x1, y2)
+        else:
+            if y1 > y2:
+                refPts[(index * 2)] = (x1, y2)
+                refPts[(index * 2) + 1] = (x2, y1)
+            else:
+                refPts[(index * 2)] = (x1, y1)
+                refPts[(index * 2) + 1] = (x2, y2)
+
+
 def render_instructions(image):
     global font, onDrag
     if (onDrag):
@@ -49,6 +76,7 @@ def click_handler(event, x, y, flags, pram):
     elif (event == cv2.EVENT_LBUTTONUP):
         onDrag = 0
         refPts.append((x, y))
+        correct_coordinates()
         render_overlays()
         numSelected = numSelected + 1
 
