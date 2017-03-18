@@ -88,15 +88,16 @@ def click_handler(event, x, y, flags, pram):
 
 
 def getSelectionsFromImage(img):
+    keepRunning = 1
     global image, refPts, numSelected, clone
     image = img
     refPts = []  # Reinit refPts
     clone = image.copy()
     render_instructions(clone)
-    cv2.namedWindow("© 2017 Syntac Inc. Palwatte Distillery Monitor")
+    cv2.namedWindow("© 2017 Syntac Inc. Palwatte Distillery Monitor", flags=cv2.WINDOW_AUTOSIZE)
     cv2.setMouseCallback("© 2017 Syntac Inc. Palwatte Distillery Monitor", click_handler)
     cv2.imshow("© 2017 Syntac Inc. Palwatte Distillery Monitor", clone)
-    while True:
+    while keepRunning:
         # cv2.imshow("© 2017 Syntac Inc. Palwatte Distillery Monitor", image)
         key = cv2.waitKey(1) & 0xFF
         if (key == ord("d")):
@@ -107,22 +108,21 @@ def getSelectionsFromImage(img):
                 numSelected = numSelected - 1
                 render_overlays()
         if (key == 27):
-            return None
-    if ((len(refPts) % 2) == 0):
-        print(len(refPts) / 2)
-        print(refPts)
+            keepRunning = 0
+            cv2.destroyAllWindows()
+            return []
+    if ((len(refPts) % 2) == 0 and len(refPts) != 0 and keepRunning == 1):
+        # print(len(refPts) / 2)
+        # print(refPts)
         for selection in range(0, int(len(refPts) / 2)):
             roi = image[refPts[0 + (selection * 2)][1]:refPts[1 + (selection * 2)][1],
                   refPts[0 + (2 * selection)][0]:refPts[1 + (2 * selection)][0]]
             cv2.imshow("ROI" + str(selection), roi)
-    else:
-        sys.exit("Selection Capture didn't get an even number of bounding points.")
 
-    cv2.waitKey(0)
+        cv2.waitKey(0)
     cv2.destroyAllWindows()
     return refPts
 
-
-img = cv2.imread('samples/34.PNG')
-co = getSelectionsFromImage(img)
-print(co)
+# img = cv2.imread('samples/37.PNG')
+# co = getSelectionsFromImage(img)
+# print(co)
